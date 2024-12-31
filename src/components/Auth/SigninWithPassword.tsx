@@ -1,14 +1,67 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
     remember: false,
   });
+  const [identifier, setIdentifier] = useState<string>(""); // Email or username
+  const [password, setPassword] = useState<string>("");
+  const [isObscure, setIsObscure] = useState(true);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  // handle  showpassword
+  const toggleObscure = () => {
+    setIsObscure(!isObscure);
+  };
+
+  // handle signin account
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    if (!identifier || !password) {
+      setError("Both email and password are required.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        localStorage.setItem("sessionId", data.sessionId);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("_id", data._id);
+        localStorage.setItem("userrole", data.userrole);
+
+        // Redirect to the dashboard
+        router.push("/views");
+      } else {
+        setError("Invalid email or password.");
+      }
+    } catch (error) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -18,9 +71,11 @@ export default function SigninWithPassword() {
         </label>
         <div className="relative">
           <input
-            type="email"
+            type="text"
             placeholder="Enter your email"
             name="email"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
           />
 
@@ -53,14 +108,19 @@ export default function SigninWithPassword() {
         </label>
         <div className="relative">
           <input
-            type="password"
+            type={isObscure ? "password" : "text"}
             name="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="password"
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
           />
 
-          <span className="absolute right-4.5 top-1/2 -translate-y-1/2">
+          <span
+            onClick={toggleObscure}
+            className="absolute right-4.5 top-1/2 -translate-y-1/2"
+          >
             <svg
               className="fill-current"
               width="22"
@@ -121,19 +181,19 @@ export default function SigninWithPassword() {
         </label>
 
         <Link
-          href="/auth/forgot-password"
+          href="/"
           className="select-none font-satoshi text-base font-medium text-dark underline duration-300 hover:text-primary dark:text-white dark:hover:text-primary"
         >
           Forgot Password?
         </Link>
       </div>
-
+      <div>{error && <p className="mb-4 text-red-500">{error}</p>}</div>
       <div className="mb-4.5">
         <button
           type="submit"
           className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
         >
-          Sign In
+          {loading ? "Singin in please wait" : " Sign In"}
         </button>
       </div>
     </form>
