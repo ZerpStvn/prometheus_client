@@ -1,2 +1,2 @@
-export const backendendpoint = "https://prometheusserver.onrender.com";
+export const backendendpoint = "http://127.0.0.1:5000";
 // https://prometheusserver.onrender.com
