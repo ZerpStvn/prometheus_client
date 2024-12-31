@@ -119,7 +119,7 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Building Name
               </label>
-              <span>
+              <span className=" cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -144,7 +144,7 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Building Address
               </label>
-              <span>
+              <span className=" cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
