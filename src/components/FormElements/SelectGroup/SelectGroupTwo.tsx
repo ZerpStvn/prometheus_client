@@ -1,14 +1,33 @@
 "use client";
 import React, { useState } from "react";
 
-const SelectGroupTwo: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
+interface SelectGroupTwoProps {
+  selectedCountry?: string;
+  onCountryChange?: (value: string) => void;
+}
+
+const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
+  selectedCountry,
+  onCountryChange,
+}) => {
+  const [selectedOption, setSelectedOption] = useState<string>(
+    selectedCountry || "",
+  );
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedOption(value);
+    changeTextColor();
+
+    if (onCountryChange) {
+      onCountryChange(value);
+    }
+  };
   return (
     <div>
       <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
@@ -43,11 +62,19 @@ const SelectGroupTwo: React.FC = () => {
           onChange={(e) => {
             setSelectedOption(e.target.value);
             changeTextColor();
+            handleChange(e);
           }}
           className={`relative z-10 w-full appearance-none rounded-[7px] border border-stroke bg-transparent px-11.5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 ${
             isOptionSelected ? "text-dark dark:text-white" : ""
           }`}
         >
+          <option
+            disabled
+            value="Select Options"
+            className="text-dark-5 dark:text-dark-6"
+          >
+            Select Options
+          </option>
           <option value="UnitedStates" className="text-dark-5 dark:text-dark-6">
             United States
           </option>
