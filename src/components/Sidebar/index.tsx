@@ -437,6 +437,7 @@ const menuGroups = [
         route: "#",
         children: [
           { label: "Profile", route: "/profile" },
+          { label: "Help Center", route: "/helpcenter" },
           { label: "Logout", route: "/" },
         ],
       },

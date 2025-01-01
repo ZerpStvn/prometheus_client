@@ -1,19 +1,18 @@
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
-
-import React from "react";
-import ProjectForm from "./form";
 import { Metadata } from "next";
-// Project Metadata
+import React from "react";
+import HelpCenterForm from "./helpcenterform";
+
 export const metadata: Metadata = {
-  title: "Create Project",
+  title: "Help Center",
   description: "Building Analysis Project List",
 };
-const CreateProjects = () => {
+const HelpCenter = () => {
   return (
     <DefaultLayout>
-      <ProjectForm />
+      <HelpCenterForm />
     </DefaultLayout>
   );
 };
 
-export default CreateProjects;
+export default HelpCenter;
