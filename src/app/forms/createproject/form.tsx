@@ -10,6 +10,7 @@ const ProjectForm = () => {
     buildingaddress: "",
     profilePhoto: null,
     country: "United States",
+    yearbuilt: "",
     state: "",
   });
   const [iscanda, setisCanda] = useState(true);
@@ -18,7 +19,7 @@ const ProjectForm = () => {
     "",
   );
 
-  //
+  //handle toggle unit measurement
   const handleUnitToggle = () => {
     setUnit((prevUnit) => (prevUnit === "sqft" ? "sqm" : "sqft"));
   };
@@ -305,6 +306,7 @@ const ProjectForm = () => {
           </div>
         </div>
       </div>
+
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
@@ -356,7 +358,7 @@ const ProjectForm = () => {
               id="grossSquareFootage"
               name="grossSquareFootage"
               onChange={handleInputChange}
-              value={grossSquareFootage}
+              value={convertedValue}
               placeholder={unit === "sqft" ? "608,660" : "56,500"}
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
@@ -493,6 +495,7 @@ const ProjectForm = () => {
           </div>
         </div>
       </div>
+
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
