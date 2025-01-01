@@ -1,17 +1,20 @@
 "use client";
 import React, { useState } from "react";
+import { US_STATES, CANADA_PROVINCES } from "@/hooks/usstates";
 
-interface SelectGroupTwoProps {
-  selectedCountry?: string;
-  onCountryChange?: (value: string) => void;
+interface SelectStatesProps {
+  selectedState?: string;
+  onStateChange?: (value: string) => void;
+  iscanda?: boolean;
 }
 
-const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
-  selectedCountry,
-  onCountryChange,
+const SelectStates: React.FC<SelectStatesProps> = ({
+  selectedState,
+  onStateChange,
+  iscanda,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string>(
-    selectedCountry || "",
+    selectedState || "",
   );
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
@@ -24,14 +27,14 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
     setSelectedOption(value);
     changeTextColor();
 
-    if (onCountryChange) {
-      onCountryChange(value);
+    if (onStateChange) {
+      onStateChange(value);
     }
   };
   return (
     <div>
       <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-        Select Country
+        State/Province
       </label>
 
       <div className="relative z-20 rounded-[7px] bg-white dark:bg-dark-2">
@@ -68,20 +71,23 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
             isOptionSelected ? "text-dark dark:text-white" : ""
           }`}
         >
-          <option
-            disabled
-            value="Select Options"
-            className="text-dark-5 dark:text-dark-6"
-          >
-            Select Options
-          </option>
-          <option value="UnitedStates" className="text-dark-5 dark:text-dark-6">
-            United States
-          </option>
-
-          <option value="Canada" className="text-dark-5 dark:text-dark-6">
-            Canada
-          </option>
+          {iscanda === false ? (
+            <>
+              {CANADA_PROVINCES.map((province, index) => (
+                <option key={index} value={province.value}>
+                  {province.label}
+                </option>
+              ))}
+            </>
+          ) : (
+            <>
+              {US_STATES.map((state, index) => (
+                <option key={index} value={state.value}>
+                  {state.label}
+                </option>
+              ))}
+            </>
+          )}
         </select>
 
         <span className="absolute right-4.5 top-1/2 z-10 -translate-y-1/2 text-dark-4 dark:text-dark-6">
@@ -106,4 +112,4 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
   );
 };
 
-export default SelectGroupTwo;
+export default SelectStates;

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
@@ -89,7 +89,7 @@ const menuGroups = [
         label: "Projects",
         route: "#",
         children: [
-          { label: "Create Project", route: "/forms/form-elements/" },
+          { label: "Create Project", route: "/forms/createproject/" },
           { label: "Projects List", route: "/forms/projectslist/" },
         ],
       },
@@ -439,7 +439,7 @@ const menuGroups = [
         route: "#",
         children: [
           { label: "Profile", route: "/profile" },
-          { label: "Logout", route: "/auth/signin" },
+          { label: "Logout", route: "/" },
         ],
       },
     ],
