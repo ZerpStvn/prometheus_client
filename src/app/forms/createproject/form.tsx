@@ -1,9 +1,10 @@
 "use client";
 import SelectGroupTwo from "@/components/FormElements/SelectGroup/SelectGroupTwo";
 import SelectStates from "@/components/FormElements/SelectGroup/selectStates";
+import { backendendpoint } from "@/hooks/endpoint";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type FormDataType = {
   buildingName: string;
@@ -29,6 +30,7 @@ type FormDataType = {
 
 const ProjectForm = () => {
   const [units, setUnits] = useState<FormDataType[]>([]);
+  const [infocenter, setInfocenter] = useState<any>(null);
   const [formData, setFormData] = useState({
     buildingName: "",
     buildingaddress: "",
@@ -52,6 +54,46 @@ const ProjectForm = () => {
   });
   const [iscanda, setisCanda] = useState(true);
   const [unit, setUnit] = useState<"sqft" | "sqm">("sqft");
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // load info center
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${backendendpoint}/gethelpcenter/67757f4ab8258e4d2aeec74d`,
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+          setInfocenter(data);
+        } else {
+          console.error(
+            "Error fetching data:",
+            data.message || response.statusText,
+          );
+          alert("Error fetching data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("Error fetching data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleShowInfoCenter = (value: string) => {
+    if (!infocenter) {
+      alert("Data is not loaded yet.");
+      return;
+    }
+    if (value in infocenter) {
+      alert(` ${infocenter[value]}`);
+    }
+  };
 
   //handle toggle unit measurement
   const handleUnitToggle = () => {
@@ -90,6 +132,11 @@ const ProjectForm = () => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -183,7 +230,12 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Building Name
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("buildingName");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -210,7 +262,12 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Building Address
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("buildingAddress");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -238,7 +295,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Year Built
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("yearBuilt");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -265,7 +327,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Year Renovated
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("yearRenovated");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -364,7 +431,12 @@ const ProjectForm = () => {
                   ? "Gross Square Footage"
                   : "Gross Square Meters"}
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("grossSquareFootage");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -391,7 +463,12 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 {unit === "sqft" ? "Floor Plate (SF)" : "Floor Plate (SQM)"}
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("floorPlate");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -419,7 +496,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Unit Size
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("unitSize");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -446,7 +528,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Unit Floors
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("unitFloors");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -473,7 +560,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Gross Rent
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("grossRent");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -501,7 +593,12 @@ const ProjectForm = () => {
                 <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                   Assumed Vacancy (%)
                 </label>
-                <span className=" cursor-pointer">
+                <span
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleShowInfoCenter("assumedVacancy");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="19px"
@@ -542,7 +639,12 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Operating Expense (%)
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("operatingExpense");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -567,9 +669,14 @@ const ProjectForm = () => {
           <div>
             <div className="flex  gap-2">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                ENTRY CAP RATE (%)
+                Entry Cap Rate (%)
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("entryCapRate");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -594,9 +701,14 @@ const ProjectForm = () => {
           <div>
             <div className="flex  gap-2">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                EXIT CAP RATE
+                Exit Cap Rate
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("exitCapRate");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -633,7 +745,12 @@ const ProjectForm = () => {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Unit Per Floor
               </label>
-              <span className=" cursor-pointer">
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  handleShowInfoCenter("unitPerFloor");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="19px"
@@ -721,7 +838,12 @@ const ProjectForm = () => {
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Total Number Of Units
             </label>
-            <span className="cursor-pointer">
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                handleShowInfoCenter("totalNumberOfUnits");
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="19px"

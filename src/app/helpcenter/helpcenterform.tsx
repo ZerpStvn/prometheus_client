@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-
+import { backendendpoint } from "@/hooks/endpoint";
 interface FormData {
   _id: string;
   buildingName: string;
@@ -46,7 +46,7 @@ const HelpCenterForm: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/gethelpcenter/67757f4ab8258e4d2aeec74d`, // Use actual ID here
+          `${backendendpoint}/gethelpcenter/67757f4ab8258e4d2aeec74d`, // Use actual ID here
         );
         const data = await response.json();
 
@@ -97,7 +97,7 @@ const HelpCenterForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/helpcenter/67757f4ab8258e4d2aeec74d`,
+        `${backendendpoint}/helpcenter/67757f4ab8258e4d2aeec74d`,
         {
           method: "PUT", // Change to PUT for update
           headers: {

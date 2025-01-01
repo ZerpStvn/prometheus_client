@@ -7,7 +7,7 @@ const chatData: Chat[] = [
     active: true,
     avatar: "/images/user/user-01.png",
     name: "Devid Heilo",
-    text: "Hello, how are you?",
+    text: "Atlanta City",
     time: "12 min",
     textCount: 3,
     dot: 3,
@@ -16,7 +16,7 @@ const chatData: Chat[] = [
     active: true,
     avatar: "/images/user/user-02.png",
     name: "Henry Fisher",
-    text: "I am waiting for you",
+    text: "Chicago",
     time: "5:54 PM",
     textCount: 0,
     dot: 1,
@@ -25,7 +25,7 @@ const chatData: Chat[] = [
     active: null,
     avatar: "/images/user/user-04.png",
     name: "Wilium Smith",
-    text: "Where are you now?",
+    text: "Chicago",
     time: "10:12 PM",
     textCount: 0,
     dot: 3,
@@ -35,7 +35,7 @@ const chatData: Chat[] = [
     seen: true,
     avatar: "/images/user/user-05.png",
     name: "Henry Deco",
-    text: "Thank you so much!",
+    text: "Chicago",
     time: "Sun",
     textCount: 2,
     dot: 6,
@@ -44,7 +44,7 @@ const chatData: Chat[] = [
     active: false,
     avatar: "/images/user/user-06.png",
     name: "Jubin Jack",
-    text: "Hello, how are you?",
+    text: "Atlanta City",
     time: "Oct 23",
     textCount: 0,
     dot: 3,
@@ -55,13 +55,13 @@ const ChatCard = () => {
   return (
     <div className="col-span-12 rounded-[10px] bg-white py-6 shadow-1 dark:bg-gray-dark dark:shadow-card xl:col-span-4">
       <h4 className="mb-5.5 px-7.5 text-body-2xlg font-bold text-dark dark:text-white">
-        Chats
+        Users
       </h4>
 
       <div>
         {chatData.map((chat, key) => (
           <Link
-            href="/"
+            href="#"
             className="flex items-center gap-4.5 px-7.5 py-3 hover:bg-gray-1 dark:hover:bg-dark-2"
             key={key}
           >
