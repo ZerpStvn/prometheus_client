@@ -1,22 +1,27 @@
+"use client";
 import { ApexOptions } from "apexcharts";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
-const ChartTwo: React.FC = () => {
+const CapitalStacks2: React.FC = () => {
   const series = [
     {
-      name: "Project",
-      data: [44, 55, 41, 67, 22, 43, 65],
+      name: "debt ",
+      data: [74525113, 0, 6983122],
     },
     {
-      name: "Case",
-      data: [13, 23, 20, 8, 13, 27, 15],
+      name: "Non Subsidy Equity ",
+      data: [74525113, 0, 6983122],
+    },
+    {
+      name: "Subsidy Equity ",
+      data: [74525113, 0, 6983122],
     },
   ];
 
   const options: ApexOptions = {
-    colors: ["#5750F1", "#0ABEF9"],
+    colors: ["#5750F1", "#0ABEF9", "#00FF00"],
     chart: {
       fontFamily: "Satoshi, sans-serif",
       type: "bar",
@@ -71,7 +76,7 @@ const ChartTwo: React.FC = () => {
     },
 
     xaxis: {
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: [""],
     },
     legend: {
       position: "top",
@@ -98,7 +103,7 @@ const ChartTwo: React.FC = () => {
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Project Create
+            PROJECT METRICS
           </h4>
         </div>
         <div>
@@ -120,4 +125,4 @@ const ChartTwo: React.FC = () => {
   );
 };
 
-export default ChartTwo;
+export default CapitalStacks2;
