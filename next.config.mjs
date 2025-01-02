@@ -1,12 +1,17 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "127.0.0.1"],
+    domains: ["localhost", "127.0.0.1", "prometheusserver.onrender.com"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.sanity.io",
         port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "prometheusserver.onrender.com",
+        pathname: "/uploads/**",
       },
       {
         protocol: "http",
