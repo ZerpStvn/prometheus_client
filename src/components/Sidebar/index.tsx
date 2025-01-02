@@ -131,7 +131,7 @@ const menuGroups = [
           </svg>
         ),
         label: "Proforma",
-        route: "/proforma",
+        route: "/proforma/67764f9ded09cc4ff52e36b7",
       },
       {
         icon: (

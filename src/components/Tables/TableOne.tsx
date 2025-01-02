@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { backendendpoint } from "@/hooks/endpoint";
 import { formatDate } from "@/hooks/formatdate";
+import { useRouter } from "next/navigation";
 
 type Project = {
   _id: string;
@@ -18,11 +19,20 @@ type Project = {
 const TableOne = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
-
+  const router = useRouter();
   //  handle open more options
   // Toggle the dropdown menu for a specific row
   const toggleMenu = (projectId: string) => {
     setOpenMenuId(openMenuId === projectId ? null : projectId);
+  };
+  const handleViewData = (project: Project, ispage: number) => {
+    if (ispage === 0) {
+      router.push(`/proforma/${project._id}`);
+    } else if (ispage === 1) {
+      router.push(`/dashboard/subsidy/${project._id}`);
+    } else if (ispage === 2) {
+      router.push(`/dashboard/capitalstacks/${project._id}`);
+    }
   };
 
   // get ProjectData
@@ -53,6 +63,7 @@ const TableOne = () => {
 
           const data = await response.json();
           setProjects(data); // Store fetched projects
+          console.log(data[0]);
         } catch (error) {
           console.error("Failed to fetch projects:", error);
         }
@@ -150,7 +161,7 @@ const TableOne = () => {
                     <li
                       className="cursor-pointer px-4 py-2 hover:bg-gray-900 hover:text-white"
                       onClick={() => {
-                        console.log(`${projct._id}  Proforma`);
+                        handleViewData(projct, 0);
                       }}
                     >
                       Pro Forma
@@ -183,8 +194,8 @@ const TableOne = () => {
                       Delete
                     </li>
                     {/* <li className="px-4 py-2 hover:bg-gray-900 hover:text-white cursor-pointer">
-                          Edit
-                        </li> */}
+                            Edit
+                          </li> */}
                   </ul>
                 </div>
               )}
