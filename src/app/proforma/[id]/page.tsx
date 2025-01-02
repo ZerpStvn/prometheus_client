@@ -1,10 +1,11 @@
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import React from "react";
+import ProformaTable from "../proforma";
 
-const Proforma = () => {
+const Proforma = ({ params }: { params: { id: string } }) => {
   return (
     <DefaultLayout>
-      <div>Proforma</div>
+      <ProformaTable projectid={params.id} />
     </DefaultLayout>
   );
 };

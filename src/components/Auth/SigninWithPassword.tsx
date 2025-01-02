@@ -193,7 +193,7 @@ export default function SigninWithPassword() {
           type="submit"
           className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
         >
-          {loading ? "Singin in please wait" : " Sign In"}
+          {loading ? "Signing in please wait" : " Sign In"}
         </button>
       </div>
     </form>

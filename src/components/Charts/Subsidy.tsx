@@ -3,15 +3,21 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
-const ChartOne: React.FC = () => {
+const SubsidyChart: React.FC = () => {
   const series = [
     {
       name: "Received Amount",
-      data: [0, 20, 35, 45, 35, 55, 65, 50, 65, 75, 60, 75],
+      data: [
+        59135113, 10000, 50000, 48735503, 15390, 9522563, 5683000, 5027913, 65,
+        75, 60, 75,
+      ],
     },
     {
-      name: "Due Amount",
-      data: [15, 9, 17, 32, 25, 68, 80, 68, 84, 94, 74, 62],
+      name: "Amount",
+      data: [
+        10000, 59135113, 50000, 48735503, 9522563, 15390, 5683000, 5027913,
+        59135113, 94, 74, 62,
+      ],
     },
   ];
 
@@ -98,18 +104,18 @@ const ChartOne: React.FC = () => {
     xaxis: {
       type: "category",
       categories: [
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
+        "HTC",
+        "TIF",
+        "CUE",
+        "LIHTC 9%",
+        "LIHTC 4%",
+        "BILF",
+        "CLF",
+        "NMCT",
+        "LLT",
+        "CSA",
+        "IRA",
+        "IS",
       ],
       axisBorder: {
         show: false,
@@ -132,7 +138,7 @@ const ChartOne: React.FC = () => {
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Building Analysis
+            Subsidy Chart
           </h4>
         </div>
         <div className="flex items-center gap-2.5">
@@ -155,15 +161,15 @@ const ChartOne: React.FC = () => {
 
       <div className="flex flex-col gap-2 text-center xsm:flex-row xsm:gap-0">
         <div className="border-stroke dark:border-dark-3 xsm:w-1/2 xsm:border-r">
-          <p className="font-medium">Received Amount</p>
+          <p className="font-medium"> Amount</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            $45,070.00
+            $161,229,125
           </h4>
         </div>
         <div className="xsm:w-1/2">
-          <p className="font-medium">Due Amount</p>
+          <p className="font-medium">Subsidy offered</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            $32,400.00
+            $80,000,000
           </h4>
         </div>
       </div>
@@ -171,4 +177,4 @@ const ChartOne: React.FC = () => {
   );
 };
 
-export default ChartOne;
+export default SubsidyChart;

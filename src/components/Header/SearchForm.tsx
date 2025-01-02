@@ -1,10 +1,46 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { backendendpoint } from "@/hooks/endpoint";
+import Image from "next/image";
+import Link from "next/link";
+
+interface Project {
+  _id: string;
+  buildingName: string;
+  image_id?: string;
+}
 
 const SearchForm = () => {
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (query.trim().toLowerCase() !== "") {
+        try {
+          const response = await fetch(
+            `${backendendpoint}/searchprojects?q=${encodeURIComponent(query)}`,
+          );
+          if (response.ok) {
+            const data = await response.json();
+            setSuggestions(data); // Only update the suggestions state
+          } else {
+            console.error("Error fetching suggestions:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error fetching suggestions:", error);
+        }
+      } else {
+        setSuggestions([]); // Clear suggestions if query is empty
+      }
+    };
+
+    fetchSuggestions();
+  }, [query]); // Only depend on query, not suggestions.length
   return (
-    <>
-      <li className="hidden lg:block">
-        <form action="https://formbold.com/s/unique_form_id" method="POST">
+    <div className=" max-w-[300px]">
+      <li className="relative hidden  lg:block">
+        <form>
           <div className="relative w-full max-w-[300px]">
             <button className="absolute left-5 top-1/2 -translate-y-1/2 text-dark hover:text-primary dark:text-dark-6 dark:hover:text-primary">
               <svg
@@ -33,13 +69,35 @@ const SearchForm = () => {
 
             <input
               type="text"
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search"
               className="w-full rounded-full border border-stroke bg-gray-2 py-3 pl-13.5 pr-5 text-dark focus:border-primary focus:outline-none dark:border-dark-4 dark:bg-dark-3 dark:text-white dark:focus:border-primary xl:w-[300px]"
             />
           </div>
         </form>
       </li>
-    </>
+      {suggestions.length > 0 && (
+        <div className="absolute top-[90px] min-w-[300px]  rounded-sm bg-white p-4 shadow-card">
+          <ul className="">
+            {suggestions.map((suggestion) => (
+              <Link
+                href={`/${suggestion._id}`}
+                key={suggestion._id}
+                className="flex items-center gap-2 pb-2 "
+              >
+                <Image
+                  src={`${backendendpoint}/uploads/${suggestion.image_id}`}
+                  width={80}
+                  height={80}
+                  alt={"project"}
+                />
+                <p>{suggestion.buildingName}</p>
+              </Link>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 

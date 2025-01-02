@@ -12,45 +12,58 @@ const MapOne: React.FC = () => {
       return;
     }
 
-    const vectorMapOne = new jsVectorMap({
-      selector: "#mapOne",
-      map: "us_aea_en",
-      zoomButtons: true,
+    let vectorMapOne: InstanceType<typeof jsVectorMap> | null = null;
 
-      regionStyle: {
-        initial: {
-          fill: "#C8D0D8",
-        },
-        hover: {
-          fillOpacity: 1,
-          fill: "#3056D3",
-        },
-      },
-      regionLabelStyle: {
-        initial: {
-          fontFamily: "Satoshi",
-          fontWeight: "semibold",
-          fill: "#fff",
-        },
-        hover: {
-          cursor: "pointer",
-        },
-      },
+    try {
+      vectorMapOne = new jsVectorMap({
+        selector: "#mapOne",
+        map: "us_aea_en",
+        zoomButtons: true,
 
-      labels: {
-        regions: {
-          render(code: string) {
-            return code.split("-")[1];
+        regionStyle: {
+          initial: {
+            fill: "#C8D0D8",
+          },
+          hover: {
+            fillOpacity: 1,
+            fill: "#3056D3",
           },
         },
-      },
-    });
+        regionLabelStyle: {
+          initial: {
+            fontFamily: "Satoshi",
+            fontWeight: "semibold",
+            fill: "#fff",
+          },
+          hover: {
+            cursor: "pointer",
+          },
+        },
+
+        labels: {
+          regions: {
+            render(code: string) {
+              return code.split("-")[1];
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error initializing vector map:", error);
+    }
 
     return () => {
-      if (vectorMapOne) {
-        vectorMapOne.destroy();
+      // Check if the map element still exists before trying to destroy the map
+      if (vectorMapOne && mapElement) {
+        try {
+          vectorMapOne.destroy();
+        } catch (cleanupError) {
+          console.error("Error during map cleanup:", cleanupError);
+        }
       } else {
-        console.error("Vector map instance not found during cleanup");
+        console.error(
+          "Vector map instance or map element not found during cleanup",
+        );
       }
     };
   }, []);
