@@ -964,7 +964,7 @@ const ProformaTable: React.FC<ProformaTableProps> = ({ projectid }) => {
                   }}
                   className="mt-4 w-full rounded bg-primary py-2 text-white"
                 >
-                  Add more unit
+                  Update Proforma
                 </button>
               </div>
             </form>

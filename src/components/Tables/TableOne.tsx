@@ -36,42 +36,32 @@ const TableOne = () => {
   };
 
   // get ProjectData
+  // Fetch all projects
   useEffect(() => {
     const fetchProjects = async () => {
-      if (typeof window !== "undefined") {
-        const userId = localStorage.getItem("sessionId");
+      try {
+        const response = await fetch(`${backendendpoint}/getprojects`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-        if (!userId) {
-          console.error("User not logged in or sessionId not found");
-          return;
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
         }
 
-        try {
-          const response = await fetch(
-            `${backendendpoint}/getprojects?user_id=${userId}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            },
-          );
-
-          if (!response.ok) {
-            throw new Error("Failed to fetch projects");
-          }
-
-          const data = await response.json();
-          setProjects(data); // Store fetched projects
-          console.log(data[0]);
-        } catch (error) {
-          console.error("Failed to fetch projects:", error);
-        }
+        const data = await response.json();
+        setProjects(data); // Store fetched projects
+        console.log(data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
       }
     };
 
     fetchProjects();
   }, []);
+
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
@@ -106,7 +96,9 @@ const TableOne = () => {
             </h5>
           </div>
         </div>
-
+        <div>
+          <p>{projects.length}</p>
+        </div>
         {projects.map((projct, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
